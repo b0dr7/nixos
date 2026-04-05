@@ -29,7 +29,6 @@
       lutris
       winetricks
       gamescope
-      sober
       freedownloadmanager
       zapzap
       libreoffice-fresh
