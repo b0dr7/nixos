@@ -38,7 +38,7 @@
     ];
   };
   flake.modules.nixos.laptopModule = {pkgs, ...}: {
-    boot.kernelPackages = pkgs.linuxPackages-latest;
+    boot.kernelPackages = pkgs.linuxPackages_latest;
     services.logind.settings.Login.HandleLidSwitch = "ignore";
 
     services.linux-enable-ir-emitter.enable = true;
