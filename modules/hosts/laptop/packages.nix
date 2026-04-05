@@ -13,7 +13,6 @@
       onlyoffice-desktopeditors
       gnome-calendar
       firefox
-      cloudflare-warp
       proton-vpn
       rustdesk
       qbittorrent-enhanced
@@ -29,7 +28,6 @@
       lutris
       winetricks
       gamescope
-      freedownloadmanager
       zapzap
       libreoffice-fresh
       joplin-desktop
@@ -38,9 +36,6 @@
       zed-editor
       zed-discord-presence
       btrfs-progs
-      hidamari
-      rog-control-center
-      envycontrol
     ];
     fonts.packages = with pkgs; [
       wineWow64Packages.fonts
