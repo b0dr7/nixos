@@ -1,7 +1,7 @@
 {
-  flake.modules.nixos.user-amr = {pkgs, ...}: {
+  flake.modules.nixos.user-b0dr = {pkgs, ...}: {
     users.users = {
-      amr = {
+      b0dr = {
         initialPassword = "password";
         shell = pkgs.fish;
         isNormalUser = true;

@@ -1,32 +1,48 @@
 {...}: {
   flake.modules.nixos.laptopPackages = {pkgs, ...}: {
     environment.systemPackages = with pkgs; [
+      noctalia-shell
+      bibata-cursors
+      foot
+      nemo
+      file-roller
+      btop
+      resources
+      easyeffects
+      pavucontrol
+      onlyoffice-desktopeditors
+      gnome-calendar
+      firefox
+      cloudflare-warp
+      proton-vpn
+      rustdesk
+      qbittorrent-enhanced
+      vlc
+      mpv
+      obs-studio
+      gpu-screen-recorder
       kdePackages.kdenlive
       audacity
-      obs-studio
-      resources
-      onlyoffice-desktopeditors
-      qbittorrent-enhanced
-
-      proton-vpn
-      mpv
-      gnome-calendar
-      equibop
-      pavucontrol
-      file-roller
-      btrfs-progs
-      bitwarden-desktop
+      heroic
+      itch
+      mangohud
+      lutris
+      winetricks
+      gamescope
+      mcpelauncher-manifest
+      sober
+      freedownloadmanager
       zapzap
+      libreoffice-fresh
+      joplin-desktop
+      discord
+      equibop
       zed-editor
       zed-discord-presence
-      btop
-      nemo
-      godot
-      netcat # for godot zed
-      blender
-      foot
-      bibata-cursors
-      noctalia-shell
+      btrfs-progs
+      hidamari
+      rog-control-center
+      envycontrol
     ];
     fonts.packages = with pkgs; [
       wineWow64Packages.fonts

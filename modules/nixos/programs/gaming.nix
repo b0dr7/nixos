@@ -4,24 +4,20 @@
     programs.steam = {
       enable = true;
       package = pkgs.steam.override {
-        extraPkgs = pkgs:
-          with pkgs; [
-            # Workaround xorg cursor issue
-            bibata-cursors
-          ];
+       extraPkgs = pkgs: with pkgs; [ bibata-cursors ];
       };
     };
     programs.steam.gamescopeSession.enable = true;
-    environment.systemPackages = [
-      pkgs.prismlauncher # Minecraft
-      pkgs.love # to run love2d games
-      pkgs.mangohud
-      pkgs.lutris
-      pkgs.umu-launcher
-      (pkgs.winePackages.waylandFull.override {wineBuild = "wine64";})
-      pkgs.winetricks
-    ];
-
     programs.gamemode.enable = true;
+     environment.systemPackages = with pkgs; [
+      prismlauncher
+      love
+      mangohud
+      lutris
+      umu-launcher
+      (winePackages.waylandFull.override {wineBuild = "wine64";})
+      winetricks
+      proton-ge-bin
+    ];
   };
 }
