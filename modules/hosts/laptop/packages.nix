@@ -29,7 +29,6 @@
       lutris
       winetricks
       gamescope
-      mcpelauncher-manifest
       sober
       freedownloadmanager
       zapzap
