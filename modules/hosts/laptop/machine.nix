@@ -101,7 +101,7 @@
     services.devmon.enable = true;
 
     fileSystems."/" = {
-      device = "/dev/disk/by-uuid/ab5848dc-2fc5-4331-89be-648e73ec676b";
+      device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
       fsType = "btrfs";
       options = [
         "subvol=@nixos"
@@ -113,7 +113,7 @@
     };
 
     fileSystems."/home" = {
-      device = "/dev/disk/by-uuid/ab5848dc-2fc5-4331-89be-648e73ec676b";
+      device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
       fsType = "btrfs";
       options = [
         "subvol=@home"
@@ -125,7 +125,7 @@
     };
 
     fileSystems."/nix" = {
-      device = "/dev/disk/by-uuid/ab5848dc-2fc5-4331-89be-648e73ec676b";
+      device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
       fsType = "btrfs";
       options = [
         "subvol=@nix"
@@ -136,7 +136,7 @@
     };
 
     fileSystems."/mnt/swap" = {
-      device = "/dev/disk/by-uuid/ab5848dc-2fc5-4331-89be-648e73ec676b";
+      device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
       fsType = "btrfs";
       options = [
         "subvol=@swap"
