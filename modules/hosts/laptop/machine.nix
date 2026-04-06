@@ -23,7 +23,6 @@
       tlp
       fish
       printing
-      keyd
       direnv
 
       niri
