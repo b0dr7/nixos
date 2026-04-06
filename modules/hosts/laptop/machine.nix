@@ -38,7 +38,7 @@
     ];
   };
   flake.modules.nixos.laptopModule = {pkgs, ...}: {
-    boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
     services.logind.settings.Login.HandleLidSwitch = "ignore";
 
     services.linux-enable-ir-emitter.enable = true;
@@ -74,10 +74,10 @@
     users.users.root.initialPassword = "root";
 
     hardware.nvidia.prime = {
-      offload.enable = true;
-      offload.enableOffloadCmd = true;
       intelBusId = "PCI:0:2:0";
       nvidiaBusId = "PCI:1:0:0";
+      offload.enable = true;
+      offload.enableOffloadCmd = true;
     };
     services.asusd.enable = true;
 
@@ -92,6 +92,7 @@
           useOSProber = true;
           device = "nodev";
           efiSupport = true;
+        };
       };
     };
 
@@ -100,7 +101,7 @@
     services.devmon.enable = true;
 
     fileSystems."/" = {
-      device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
+      device = "/dev/disk/by-uuid/ab5848dc-2fc5-4331-89be-648e73ec676b";
       fsType = "btrfs";
       options = [
         "subvol=@nixos"
@@ -112,7 +113,7 @@
     };
 
     fileSystems."/home" = {
-      device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
+      device = "/dev/disk/by-uuid/ab5848dc-2fc5-4331-89be-648e73ec676b";
       fsType = "btrfs";
       options = [
         "subvol=@home"
@@ -124,7 +125,7 @@
     };
 
     fileSystems."/nix" = {
-      device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
+      device = "/dev/disk/by-uuid/ab5848dc-2fc5-4331-89be-648e73ec676b";
       fsType = "btrfs";
       options = [
         "subvol=@nix"
@@ -135,7 +136,7 @@
     };
 
     fileSystems."/mnt/swap" = {
-      device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
+      device = "/dev/disk/by-uuid/ab5848dc-2fc5-4331-89be-648e73ec676b";
       fsType = "btrfs";
       options = [
         "subvol=@swap"
@@ -148,11 +149,9 @@
     ];
 
     fileSystems."/boot" = {
-      device = "/dev/disk/by-uuid/B0E1-F164";
+      device = "/dev/disk/by-uuid/B0E1-F264";
       fsType = "vfat";
       options = ["fmask=0077" "dmask=0077"];
-};
-      };
- }        
-}
+    };
+
 }
