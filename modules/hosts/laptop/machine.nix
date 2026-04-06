@@ -92,16 +92,6 @@
           useOSProber = true;
           device = "nodev";
           efiSupport = true;
-          default = "0";
-          timeout = "0";
-          extraConfig = ''
-            set timeout_style=hidden
-            if keystatus --shift ; then
-              set timeout=10
-              set timeout_style=menu
-            fi
-          '';
-        };
       };
     };
 
