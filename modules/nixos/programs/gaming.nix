@@ -17,7 +17,6 @@
       umu-launcher
       (winePackages.waylandFull.override {wineBuild = "wine64";})
       winetricks
-      proton-ge-bin
     ];
   };
 }
