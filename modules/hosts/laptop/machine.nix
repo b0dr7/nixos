@@ -25,9 +25,6 @@
       printing
       direnv
 
-      niri
-      noctalia
-
       yazi
       firefox
       gaming
