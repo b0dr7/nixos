@@ -99,6 +99,7 @@
     boot = {
       loader = {
         efi.canTouchEfiVariables = true;
+        boot.kernelParams = [ "acpi_backlight=native" ];
         grub = {
           enable = true;
           useOSProber = true;
