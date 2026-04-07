@@ -98,6 +98,11 @@
     services.udisks2.enable = true;
     services.devmon.enable = true;
 
+    # Power Management Conflict Fix
+    services.tlp.enable = true;
+    services.auto-cpufreq.enable = false; # Disabled to stop the conflict
+    services.power-profiles-daemon.enable = false; # Disabled to let TLP work
+
     fileSystems."/" = {
       device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
       fsType = "btrfs";
