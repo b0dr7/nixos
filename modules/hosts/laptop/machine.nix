@@ -38,6 +38,20 @@
     boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
     services.logind.settings.Login.HandleLidSwitch = "ignore";
 
+    services.resolved = {
+    enable = true;
+    dnssec = "true";
+    domains = [ "~." ];
+    fallbackDns = [ "1.1.1.1" "8.8.8.8" ];
+    extraConfig = ''
+      DNS=45.90.28.0#7c81ed.dns.nextdns.io
+      DNS=2a07:a8c0::#7c81ed.dns.nextdns.io
+      DNS=45.90.30.0#7c81ed.dns.nextdns.io
+      DNS=2a07:a8c1::#7c81ed.dns.nextdns.io
+      DNSOverTLS=yes
+    '';
+  };
+
     services.linux-enable-ir-emitter.enable = true;
     services.howdy = {
       enable = true;
