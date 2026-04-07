@@ -1,21 +1,10 @@
 { pkgs, ... }: {
 
-  # 1. BOOT & HARDWARE (Brightness Fix Here)
-  boot = {
-    kernelParams = [ "acpi_backlight=native" ]; 
-    loader = {
-      efi.canTouchEfiVariables = true;
-      grub = {
-        enable = true;
-        useOSProber = true;
-        device = "nodev";
-        efiSupport = true;
-      };
-    };
-  };
-
-  # 2. SYSTEM-WIDE NEXTDNS (Forcing NetworkManager to comply)
+  # 1. NETWORKING & DNS (FORCED NEXTDNS)
   networking.networkmanager.dns = "systemd-resolved";
+  
+  # This block tells the system to ONLY use these servers and ignore router/ISP defaults
+  networking.nameservers = [ "45.90.28.0" "45.90.30.0" ];
 
   services.resolved = {
     enable = true;
@@ -31,7 +20,27 @@
     '';
   };
 
-  # 3. FILE SYSTEMS (Including your Windows OS Partition)
+  # 2. BOOT & BRIGHTNESS FIX
+  boot = {
+    kernelParams = [ "acpi_backlight=native" ]; 
+    loader = {
+      efi.canTouchEfiVariables = true;
+      grub = {
+        enable = true;
+        useOSProber = true;
+        device = "nodev";
+        efiSupport = true;
+      };
+    };
+  };
+
+  # 3. WINDOWS DRIVE & FILE SYSTEMS
+  fileSystems."/mnt/windows" = {
+    device = "/dev/disk/by-uuid/FEAEE3DDAEE38D09";
+    fsType = "ntfs3";
+    options = [ "rw" "uid=1000" "umask=000" "nofail" ];
+  };
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
     fsType = "btrfs";
@@ -62,29 +71,16 @@
     options = ["fmask=0077" "dmask=0077"];
   };
 
-  # Your Windows Partition (nvme0n1p3)
-  fileSystems."/mnt/windows" = {
-    device = "/dev/disk/by-uuid/FEAEE3DDAEE38D09";
-    fsType = "ntfs3";
-    options = [ "rw" "uid=1000" "umask=000" "nofail" ];
-  };
-
   swapDevices = [{device = "/mnt/swap/swapfile";}];
 
-  # 4. LAPTOP SERVICES & DRIVERS
+  # 4. HARDWARE & SERVICES
   boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
   services.logind.settings.Login.HandleLidSwitch = "ignore";
-
   services.linux-enable-ir-emitter.enable = true;
   services.howdy = {
     enable = true;
     control = "sufficient";
-    settings = {
-      video = {
-        certainty = 2;
-        dark_threshold = 80;
-      };
-    };
+    settings.video = { certainty = 2; dark_threshold = 80; };
   };
 
   services.flatpak.enable = true;
@@ -97,7 +93,7 @@
   services.auto-cpufreq.enable = false; 
   services.power-profiles-daemon.enable = false;
 
-  # Graphics (Nvidia Prime)
+  # Nvidia Settings
   hardware.nvidia.prime = {
     intelBusId = "PCI:0:2:0";
     nvidiaBusId = "PCI:1:0:0";
@@ -106,12 +102,12 @@
   };
   services.asusd.enable = true;
 
-  # UI (SDDM & Plasma 6)
+  # Desktop Environment
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
   services.displayManager.defaultSession = "plasma";
 
-  # 5. GENERAL SYSTEM SETTINGS
+  # 5. MISC
   system.stateVersion = "25.11";
   time.timeZone = "Africa/Cairo";
   i18n.defaultLocale = "en_GB.UTF-8";
