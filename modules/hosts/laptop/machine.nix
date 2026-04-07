@@ -38,19 +38,22 @@
     boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
     services.logind.settings.Login.HandleLidSwitch = "ignore";
 
+    # Link NetworkManager to systemd-resolved for system-wide NextDNS
+    networking.networkmanager.dns = "systemd-resolved";
+
     services.resolved = {
-    enable = true;
-    dnssec = "true";
-    domains = [ "~." ];
-    fallbackDns = [ "1.1.1.1" "8.8.8.8" ];
-    extraConfig = ''
-      DNS=45.90.28.0#7c81ed.dns.nextdns.io
-      DNS=2a07:a8c0::#7c81ed.dns.nextdns.io
-      DNS=45.90.30.0#7c81ed.dns.nextdns.io
-      DNS=2a07:a8c1::#7c81ed.dns.nextdns.io
-      DNSOverTLS=yes
-    '';
-  };
+      enable = true;
+      dnssec = "true";
+      domains = [ "~." ];
+      fallbackDns = [ "1.1.1.1" "8.8.8.8" ];
+      extraConfig = ''
+        DNS=45.90.28.0#7c81ed.dns.nextdns.io
+        DNS=2a07:a8c0::#7c81ed.dns.nextdns.io
+        DNS=45.90.30.0#7c81ed.dns.nextdns.io
+        DNS=2a07:a8c1::#7c81ed.dns.nextdns.io
+        DNSOverTLS=yes
+      '';
+    };
 
     services.linux-enable-ir-emitter.enable = true;
     services.howdy = {
@@ -97,9 +100,9 @@
     services.asusd.enable = true;
 
     boot = {
+      kernelParams = [ "acpi_backlight=native" ]; 
       loader = {
         efi.canTouchEfiVariables = true;
-        boot.kernelParams = [ "acpi_backlight=native" ];
         grub = {
           enable = true;
           useOSProber = true;
@@ -113,10 +116,10 @@
     services.udisks2.enable = true;
     services.devmon.enable = true;
 
-    # Power Management Conflict Fix
+    # Power Management Configuration
     services.tlp.enable = true;
-    services.auto-cpufreq.enable = false; # Disabled to stop the conflict
-    services.power-profiles-daemon.enable = false; # Disabled to let TLP work
+    services.auto-cpufreq.enable = false; 
+    services.power-profiles-daemon.enable = false;
 
     fileSystems."/" = {
       device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
@@ -131,23 +134,4 @@
     };
 
     fileSystems."/nix" = {
-      device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
-      fsType = "btrfs";
-      options = ["subvol=@nix" "compress=zstd:1" "noatime" "discard=async"];
-    };
-
-    fileSystems."/mnt/swap" = {
-      device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
-      fsType = "btrfs";
-      options = ["subvol=@swap" "noatime"];
-    };
-
-    swapDevices = [{device = "/mnt/swap/swapfile";}];
-
-    fileSystems."/boot" = {
-      device = "/dev/disk/by-uuid/80E1-F164";
-      fsType = "vfat";
-      options = ["fmask=0077" "dmask=0077"];
-    };
-  };
-}
+      device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-8
