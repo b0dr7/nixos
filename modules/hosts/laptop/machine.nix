@@ -33,6 +33,7 @@
       logisim
     ];
   };
+
   flake.modules.nixos.laptopModule = {pkgs, ...}: {
     boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
     services.logind.settings.Login.HandleLidSwitch = "ignore";
@@ -59,7 +60,11 @@
       os-rebuild-boot = "nh os boot /home/b0dr/nixos -H laptop";
       grep = "grep --color=auto";
     };
-    services.displayManager.ly.enable = true;
+
+    # Enable KDE Plasma 6 & SDDM
+    services.displayManager.sddm.enable = true;
+    services.desktopManager.plasma6.enable = true;
+    services.displayManager.defaultSession = "plasma";
   };
 
   flake.modules.nixos.laptopHardware = {
@@ -78,9 +83,6 @@
     services.asusd.enable = true;
 
     boot = {
-      kernelParams = [
-        #"zswap.enabled=0"
-      ];
       loader = {
         efi.canTouchEfiVariables = true;
         grub = {
@@ -99,60 +101,33 @@
     fileSystems."/" = {
       device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
       fsType = "btrfs";
-      options = [
-        "subvol=@nixos"
-        "compress=zstd:1"
-        "noatime"
-        "discard=async"
-        "autodefrag"
-      ];
+      options = ["subvol=@nixos" "compress=zstd:1" "noatime" "discard=async" "autodefrag"];
     };
 
     fileSystems."/home" = {
       device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
       fsType = "btrfs";
-      options = [
-        "subvol=@home"
-        "compress=zstd:1"
-        "noatime"
-        "discard=async"
-        "autodefrag"
-      ];
+      options = ["subvol=@home" "compress=zstd:1" "noatime" "discard=async" "autodefrag"];
     };
 
     fileSystems."/nix" = {
       device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
       fsType = "btrfs";
-      options = [
-        "subvol=@nix"
-        "compress=zstd:1"
-        "noatime"
-        "discard=async"
-      ];
+      options = ["subvol=@nix" "compress=zstd:1" "noatime" "discard=async"];
     };
 
     fileSystems."/mnt/swap" = {
       device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
       fsType = "btrfs";
-      options = [
-        "subvol=@swap"
-        "noatime"
-      ];
+      options = ["subvol=@swap" "noatime"];
     };
 
-    swapDevices = [
-      {device = "/mnt/swap/swapfile";}
-    ];
+    swapDevices = [{device = "/mnt/swap/swapfile";}];
 
     fileSystems."/boot" = {
       device = "/dev/disk/by-uuid/80E1-F164";
       fsType = "vfat";
       options = ["fmask=0077" "dmask=0077"];
     };
-};
-
-services.displayManager.ssdm.enable = true;
-services.desktopManager.plasma6.enable = true;
-services.displayManager.defaultSession = "plasma";
-};
+  };
 }
