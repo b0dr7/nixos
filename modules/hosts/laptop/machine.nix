@@ -134,4 +134,30 @@
     };
 
     fileSystems."/nix" = {
-      device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-8
+      device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
+      fsType = "btrfs";
+      options = ["subvol=@nix" "compress=zstd:1" "noatime" "discard=async"];
+    };
+
+    fileSystems."/mnt/swap" = {
+      device = "/dev/disk/by-uuid/ab5845dc-2fc5-4331-89be-548e73ec676b";
+      fsType = "btrfs";
+      options = ["subvol=@swap" "noatime"];
+    };
+
+    # Windows Partition (nvme0n1p3)
+    fileSystems."/mnt/windows" = {
+      device = "/dev/disk/by-uuid/FEAEE3DDAEE38D09";
+      fsType = "ntfs3";
+      options = [ "rw" "uid=1000" "umask=000" "nofail" ];
+    };
+
+    swapDevices = [{device = "/mnt/swap/swapfile";}];
+
+    fileSystems."/boot" = {
+      device = "/dev/disk/by-uuid/80E1-F164";
+      fsType = "vfat";
+      options = ["fmask=0077" "dmask=0077"];
+    };
+  };
+}
