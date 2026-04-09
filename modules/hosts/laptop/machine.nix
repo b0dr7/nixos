@@ -1,8 +1,10 @@
 { pkgs, ... }: {
 
   # 1. Hardware & Boot
-  boot = {
+boot = {
+    # This is the "magic" line that forces the hardware to listen to the brightness keys
     kernelParams = [ "acpi_backlight=native" ]; 
+    
     loader = {
       efi.canTouchEfiVariables = true;
       grub = {
